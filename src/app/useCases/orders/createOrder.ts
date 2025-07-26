@@ -21,12 +21,9 @@ export async function createOrder(req: Request, res: Response) {
       return res.status(400).json({ errors: error.issues })
     }
 
-    const orders = await Order.find()
-
     const order = await Order.create({
       table: data?.table,
       products: data?.products,
-      name: `Pedido ${orders.length + 1}`,
     })
 
     return res.status(201).json(order)
