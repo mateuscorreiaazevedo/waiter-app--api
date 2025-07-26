@@ -7,18 +7,18 @@ commit_message=$(cat "$1")
 allowed_prefixes=("feat" "fix" "wip" "chore" "docs" "style" "refactor" "test" "perf" "ci" "build" "release")
 
 # Extrai a primeira palavra da mensagem do commit
-first_word=$(echo "$commit_message" | awk '{print $1}')
+first_word=$(echo "$commit_message" | awk '{print $1}' | tr -d ':')
 
 # Verifica se a primeira palavra está na lista de palavras permitidas
 if [[ ! " ${allowed_prefixes[@]} " =~ " ${first_word} " ]]; then
-  echo "❌ O commit falhou: O prefixo da mensagem deve ser uma das seguintes palavras-chave: feat, fix, wip, chore, docs, style, refactor, test, perf, ci, build, release."
+  echo "❌ O commit falhou: O prefixo '$first_word' da mensagem deve ser uma das seguintes palavras-chave: feat, fix, wip, chore, docs, style, refactor, test, perf, ci, build, release."
   exit 1
 fi
 
 # Verifica se a mensagem do commit tem mais de 10 palavras
 word_count=$(echo "$commit_message" | wc -w)
-if [ "$word_count" -gt 10 ]; then
-  echo "❌ O commit falhou: a mensagem não pode ter mais de 10 palavras. Você usou $word_count palavras."
+if [ "$word_count" -gt 20 ]; then
+  echo "❌ O commit falhou: a mensagem não pode ter mais de 20 palavras. Você usou $word_count palavras."
   exit 1
 fi
 
@@ -26,7 +26,7 @@ fi
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 # Remove a primeira palavra da mensagem do commit
-resto_da_mensagem=$(echo "$commit_message" | cut -d': ' -f2-)
+resto_da_mensagem=$(echo "$commit_message" | cut -d' ' -f2-)
 
 # Formata a nova mensagem
 formatted_message="${first_word}(${current_branch}): ${resto_da_mensagem}"
