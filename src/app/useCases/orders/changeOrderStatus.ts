@@ -21,10 +21,9 @@ export async function changeOrderStatus(req: Request, res: Response) {
         .json({ errors: (body.error || params.error)?.issues })
     }
 
-    await Order.updateOne(
-      { _id: params.data.orderId },
-      { status: body.data.status }
-    )
+    await Order.findByIdAndUpdate(params.data.orderId, {
+      status: body.data.status,
+    })
 
     return res.sendStatus(204)
   } catch {

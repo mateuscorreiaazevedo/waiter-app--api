@@ -9,6 +9,7 @@ import {
 import {
   changeOrderStatus,
   createOrder,
+  deleteOrder,
   listOrders,
 } from './app/useCases/orders'
 import { createProduct, listProducts } from './app/useCases/products'
@@ -51,6 +52,4 @@ router.post('/orders', createOrder)
 router.patch('/orders/:orderId/status', changeOrderStatus)
 
 // Delete/Cancel Order
-router.delete('/orders/:orderId', (_, res) => {
-  res.send('Delete Order')
-})
+router.delete('/orders/:orderId', deleteOrder)

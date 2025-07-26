@@ -24,6 +24,7 @@ export async function createOrder(req: Request, res: Response) {
     const order = await Order.create({
       table: data?.table,
       products: data?.products,
+      name: 'Order',
     })
 
     return res.status(201).json(order)
