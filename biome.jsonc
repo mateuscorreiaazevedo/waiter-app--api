@@ -16,7 +16,8 @@
           "level": "error",
           "fix": "safe",
           "options": {}
-        }
+        },
+        "useFilenamingConvention": "off"
       }
     }
   }

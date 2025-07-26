@@ -6,7 +6,10 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon src/index.ts",
-    "start": "node dist"
+    "start": "node dist",
+    "lint": "npx @biomejs/biome lint --write .",
+    "format": "npx @biomejs/biome format --write .",
+    "lint:fix": "npx @biomejs/biome check --write ."
   },
   "devDependencies": {
     "@biomejs/biome": "2.1.2",
