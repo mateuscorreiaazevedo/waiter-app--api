@@ -6,6 +6,7 @@ import {
   listCategories,
   listProductsByCategory,
 } from './app/useCases/categories'
+import { createOrder, listOrders } from './app/useCases/orders'
 import { createProduct, listProducts } from './app/useCases/products'
 
 export const router = Router()
@@ -37,14 +38,10 @@ router.post('/products', upload.single('image'), createProduct)
 router.get('/categories/:categoryId/products', listProductsByCategory)
 
 // List Orders
-router.get('/orders', (_, res) => {
-  res.send('List Orders')
-})
+router.get('/orders', listOrders)
 
 // Create Order
-router.post('/orders', (_, res) => {
-  res.send('Create Order')
-})
+router.post('/orders', createOrder)
 
 // Change Order Status
 router.patch('/orders/:orderId/status', (_, res) => {
