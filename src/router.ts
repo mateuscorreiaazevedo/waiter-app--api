@@ -1,7 +1,11 @@
 import path from 'node:path'
 import { Router } from 'express'
 import multer from 'multer'
-import { createCategory, listCategories } from './app/useCases/categories'
+import {
+  createCategory,
+  listCategories,
+  listProductsByCategory,
+} from './app/useCases/categories'
 import { createProduct, listProducts } from './app/useCases/products'
 
 export const router = Router()
@@ -30,9 +34,7 @@ router.get('/products', listProducts)
 router.post('/products', upload.single('image'), createProduct)
 
 // List Products by Category
-router.get('/categories/:categoryId/products', (_, res) => {
-  res.send('Get Product by Category')
-})
+router.get('/categories/:categoryId/products', listProductsByCategory)
 
 // List Orders
 router.get('/orders', (_, res) => {

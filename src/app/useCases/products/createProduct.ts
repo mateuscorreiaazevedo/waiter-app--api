@@ -9,8 +9,8 @@ const schema = z.object({
   category: z.string().min(1, 'Category is required'),
   ingredients: z
     .string()
-    .min(1, 'Ingredients is required')
-    .transform((data) => JSON.parse(data)),
+    .optional()
+    .transform((data) => (data ? JSON.parse(data) : undefined)),
 })
 
 export async function createProduct(req: Request, res: Response) {

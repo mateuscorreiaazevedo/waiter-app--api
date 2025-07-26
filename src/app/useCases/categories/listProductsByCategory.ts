@@ -1,11 +1,24 @@
 import type { Request, Response } from 'express'
+import z from 'zod'
 import { Product } from '../../models'
 
-export async function listProductsByCategory(_req: Request, res: Response) {
-  try {
-    const categories = await Product.find()
+const schema = z.object({
+  categoryId: z.string().min(1, 'Category ID is required'),
+})
 
-    return res.json(categories)
+export async function listProductsByCategory(req: Request, res: Response) {
+  try {
+    const { success, data, error } = schema.safeParse(req.params)
+
+    if (!success) {
+      return res.status(400).json({ errors: error.issues })
+    }
+
+    const productsByCategory = await Product.find()
+      .where('category')
+      .equals(data.categoryId)
+
+    return res.json(productsByCategory)
   } catch {
     return res.sendStatus(500)
   }
