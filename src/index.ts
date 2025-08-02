@@ -23,7 +23,8 @@ async function main() {
       console.log(`Server running on port ${port}`)
     })
   } catch (error) {
-    throw new Error((error as Error).message)
+    // biome-ignore lint/suspicious/noConsole: validate error
+    console.error((error as Error).message)
   }
 }
 

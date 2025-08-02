@@ -1,6 +1,25 @@
 version: '3.8'
 
 services:
+  waiterapp-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: waiterapp-api
+    restart: always
+    ports:
+      - "${PORT:-3333}:${PORT:-3333}"
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - PORT=${PORT:-3333}
+      - MONGODB_URI=${MONGODB_URI:-mongodb://admin:password123@mongodb:27017/waiterapp?authSource=admin}
+    volumes:
+      - ./uploads:/app/uploads
+    depends_on:
+      - mongodb
+    networks:
+      - waiterapp-network
+
   mongodb:
     image: mongo:7.0
     container_name: waiterapp-mongodb
