@@ -11,6 +11,11 @@ async function main() {
     const app = express()
     const port = env.PORT
 
+    app.use((_req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+      res.setHeader('Access-Control-Allow-Methods', '*')
+      res.setHeader('Access-Control-Allow-Headers', '*')
+    })
     app.use(
       '/uploads',
       express.static(path.resolve(__dirname, '..', 'uploads'))
