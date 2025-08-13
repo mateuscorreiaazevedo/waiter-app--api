@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
 import z from 'zod'
-
+import { socketService } from '../../..'
 import { Order } from '../../models'
 
 const schema = z.object({
@@ -26,6 +26,10 @@ export async function createOrder(req: Request, res: Response) {
       products: data?.products,
       name: 'Order',
     })
+
+    const orderDetails = await order.populate('products.product')
+
+    socketService.emit('createNewOrder', orderDetails)
 
     return res.status(201).json(order)
   } catch {
