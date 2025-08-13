@@ -11,10 +11,12 @@ async function main() {
     const app = express()
     const port = env.PORT
 
-    app.use((_req, res) => {
+    app.use((_req, res, next) => {
       res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
       res.setHeader('Access-Control-Allow-Methods', '*')
       res.setHeader('Access-Control-Allow-Headers', '*')
+
+      next()
     })
     app.use(
       '/uploads',
