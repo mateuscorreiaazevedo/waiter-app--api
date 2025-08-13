@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     container_name: waiterapp-api
     restart: always
+    env_file:
+      - .env
     ports:
       - "${PORT:-3333}:${PORT:-3333}"
     environment:

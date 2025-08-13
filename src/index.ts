@@ -1,15 +1,18 @@
+import path from 'node:path'
+import { config } from 'dotenv'
 import express from 'express'
 import mongoose from 'mongoose'
-import 'dotenv/config'
-import path from 'node:path'
-import { env } from './config/env'
 import { router } from './router'
+
+// Configurar dotenv baseado no ambiente
+const envFile = process.env.NODE_ENV === 'development' ? '.env.local' : '.env'
+config({ path: path.resolve(process.cwd(), envFile) })
 
 async function main() {
   try {
-    await mongoose.connect(env.MONGODB_URI)
+    await mongoose.connect(process.env.MONGODB_URI as string)
     const app = express()
-    const port = env.PORT
+    const port = process.env.PORT ? Number(process.env.PORT) : 8080
 
     app.use((_req, res, next) => {
       res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
